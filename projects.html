@@ -32,40 +32,100 @@
     <main>
         <!-- Internship Helper -->
         <section id="about" class="section">
-        <div class="container">
-            <a href="https://github.com/comp423-25s/csxl-team-a1/blob/stage/docs/feature_implementation.md"><h2>Internship Helper</h2></a>
-            <section class="section">
-                <div class="container">
-                    <div class="md-card">
-                    <iframe
-                        class="md-frame"
-                        src="/docs/internship_helper.html"
-                        title="Internship Helper Documentation"
-                        loading="lazy"
-                    ></iframe>
-                    </div>
-                </div>
-            </section>
+        <!-- wider container just for this split layout -->
+        <div class="container container--wide">
+            <a href="https://github.com/comp423-25s/csxl-team-a1/blob/stage/docs/feature_implementation.md"><h1>Internship Helper</h1></a>
 
+            <!-- Two-column split: doc left, notes right -->
+            <div class="project-split">
+            <!-- LEFT: embedded doc -->
+            <div class="project-doc">
+                <div class="md-card">
+                <iframe
+                    class="md-frame"
+                    src="/docs/internship_helper.html"
+                    title="Internship Helper Documentation"
+                    loading="lazy"
+                ></iframe>
+                </div>
+            </div>
+
+            <!-- RIGHT: your write-up -->
+            <aside class="project-notes">
+                <h2 class="notes-title">Notes</h2>
+                <p>
+                The Internship Helper is a full-stack feature for the CSXL site that streamlines the process of 
+                internship discovery and management. It provides a centralized location for students to 
+                browse internship opportunities and for administrators to manage and curate listings.
+                </p>
+
+                <p>
+                    This system was built to support the <strong>CSXL community</strong> by integrating data scraping, 
+                    database management, and modern UI workflows into a single tool. The feature automatically 
+                    scrapes internship data from trusted sources each week and persists this data into a structured 
+                    PostgreSQL database. From there, admins can review, edit, or remove listings through an intuitive 
+                    Angular-based dashboard.
+                </p>
+
+                <h3>Key Features</h3>
+                <ul>
+                    <li>Automated weekly scraping of internship data to maintain up-to-date opportunities</li>
+                    <li>Secure API endpoints built with FastAPI for filtering, searching, and CRUD operations</li>
+                    <li>Admin dashboard for managing internships, including adding new positions manually</li>
+                    <li>Role-based permissions to ensure only authorized users can modify data</li>
+                    <li>Responsive, modern UI built using Angular and TypeScript</li>
+                </ul>
+
+                <h3>Technical Overview</h3>
+                <p>
+                    The backend was developed using <strong>FastAPI</strong> to handle API routing and data validation. 
+                    A PostgreSQL database stores all internship data, while <strong>Pydantic</strong> models ensure clean, 
+                    validated input and output throughout the API layer. On the frontend, Angular components power a 
+                    streamlined user experience with dedicated views for browsing, searching, and administering internships.
+                </p>
+
+                <p>
+                    I personally led the integration across each stage of the stack — from scraping logic and database schema design 
+                    to API development and frontend UI implementation — ensuring seamless interaction between all layers of the system.
+                </p>
+
+                <h3>Tech Stack</h3>
+                <ul class="chip-list">
+                    <li>Angular</li>
+                    <li>TypeScript</li>
+                    <li>FastAPI</li>
+                    <li>PostgreSQL</li>
+                    <li>Python</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                </ul>
+
+                <h3>Project Links</h3>
+                <p class="notes-links">
+                    <a href="https://github.com/comp423-25s/csxl-team-a1" target="_blank">GitHub Repository</a> ·
+                    <a href="https://github.com/carmine-anderson" target="_blank">My Other Projects</a>
+                </p>
+            </aside>
+            </div>
         </div>
         </section>
 
         <!-- Daily Check-in-->
-        <section id="" class="section alt">
+        <section class="section alt">
         <div class="container">
             <a href="https://github.com/carmine-anderson/daily-checkin"><h2>Daily Check-in</h2></a>
         </div>
         </section>
 
-        <!-- Pygame -->
-        <section id="skills" class="section">
+        <!-- Allgame -->
+        <section class="section">
         <div class="container">
             <a href="https://github.com/carmine-anderson/allgame"><h2>Allgame</h2></a>
         </div>
         </section>
 
         <!-- MusAIc -->
-        <section id="skills" class="section alt">
+        <section class="section alt">
         <div class="container">
             <a href="https://github.com/carmine-anderson/MusAIc_App"><h2>MusAIc</h2></a>
         </div>
@@ -82,22 +142,17 @@
         const enableFadeIn = () => {
             if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
             document.body.classList.remove('fade-ready', 'fade-out');
-            // force reflow to ensure transition starts
             void document.body.offsetWidth;
             document.body.classList.add('fade-in');
             }
         };
 
-        // Prepare initial state ASAP
-        document.documentElement.classList.add('js'); // optional flag
+        document.documentElement.classList.add('js');
         if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
             document.body.classList.add('fade-ready');
         }
 
-        // Run when DOM is ready
         document.addEventListener('DOMContentLoaded', enableFadeIn);
-
-        // Also handle back/forward cache restores
         window.addEventListener('pageshow', (e) => {
             if (e.persisted) enableFadeIn();
         });
@@ -107,29 +162,21 @@
             const a = e.target.closest('a');
             if (!a) return;
 
-            // Skip new tabs, downloads, anchors, or modified clicks
             if (
-            a.target === '_blank' ||
-            a.hasAttribute('download') ||
-            a.getAttribute('href')?.startsWith('#') ||
-            e.metaKey || e.ctrlKey || e.shiftKey || e.altKey
+              a.target === '_blank' ||
+              a.hasAttribute('download') ||
+              a.getAttribute('href')?.startsWith('#') ||
+              e.metaKey || e.ctrlKey || e.shiftKey || e.altKey
             ) return;
 
-            // Only fade for same-origin navigations
             const url = new URL(a.href, location.href);
             if (url.origin !== location.origin) return;
-
-            // Respect reduce motion
             if (!matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
 
-            // Prevent immediate navigation, fade out, then go
             e.preventDefault();
             document.body.classList.remove('fade-in');
-            // force reflow so the next class transition applies
             void document.body.offsetWidth;
             document.body.classList.add('fade-out');
-
-            // Match the CSS duration (260ms). Add a tiny buffer.
             setTimeout(() => { location.href = url.href; }, 280);
         });
     </script>
