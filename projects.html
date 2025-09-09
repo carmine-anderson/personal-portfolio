@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="fade-ready">
+<body class="fade-ready no-scroll">
     <header class="site-header">
         <div class="container header-flex">
         <img src="img/github.png" alt="Github Logo" class="avatar" />
@@ -54,40 +54,31 @@
             <aside class="project-notes">
                 <h2 class="notes-title">Notes</h2>
                 <p>
-                The Internship Helper is a full-stack feature for the CSXL site that streamlines the process of 
-                internship discovery and management. It provides a centralized location for students to 
-                browse internship opportunities and for administrators to manage and curate listings.
+                The Internship Helper is a full-stack feature for the CSXL site that simplifies how students discover internships 
+                and how admins manage listings. It centralizes internship opportunities in one platform, making them easy to browse, update, and curate.
                 </p>
 
                 <p>
-                    This system was built to support the <strong>CSXL community</strong> by integrating data scraping, 
-                    database management, and modern UI workflows into a single tool. The feature automatically 
-                    scrapes internship data from trusted sources each week and persists this data into a structured 
-                    PostgreSQL database. From there, admins can review, edit, or remove listings through an intuitive 
-                    Angular-based dashboard.
+                Built for the <strong>CSXL community</strong>, the system automatically scrapes internship data weekly, stores it in a 
+                structured <strong>PostgreSQL</strong> database, and provides secure tools for admins to review, edit, or remove listings 
+                through an intuitive <strong>Angular</strong> dashboard.
                 </p>
 
                 <h3>Key Features</h3>
                 <ul>
-                    <li>Automated weekly scraping of internship data to maintain up-to-date opportunities</li>
-                    <li>Secure API endpoints built with FastAPI for filtering, searching, and CRUD operations</li>
-                    <li>Admin dashboard for managing internships, including adding new positions manually</li>
-                    <li>Role-based permissions to ensure only authorized users can modify data</li>
-                    <li>Responsive, modern UI built using Angular and TypeScript</li>
+                <li>Automated weekly internship data updates</li>
+                <li>Secure <strong>FastAPI</strong> endpoints for filtering and management</li>
+                <li>Admin dashboard for adding and editing positions</li>
+                <li>Role-based permissions for data security</li>
+                <li>Responsive, modern UI with <strong>Angular</strong> and <strong>TypeScript</strong></li>
                 </ul>
 
-                <h3>Technical Overview</h3>
+                <h3>Tech Overview</h3>
                 <p>
-                    The backend was developed using <strong>FastAPI</strong> to handle API routing and data validation. 
-                    A PostgreSQL database stores all internship data, while <strong>Pydantic</strong> models ensure clean, 
-                    validated input and output throughout the API layer. On the frontend, Angular components power a 
-                    streamlined user experience with dedicated views for browsing, searching, and administering internships.
+                I led the end-to-end development, integrating scraping logic, database design, API development, and frontend UI 
+                into one seamless system.
                 </p>
 
-                <p>
-                    I personally led the integration across each stage of the stack — from scraping logic and database schema design 
-                    to API development and frontend UI implementation — ensuring seamless interaction between all layers of the system.
-                </p>
 
                 <h3>Tech Stack</h3>
                 <ul class="chip-list">
