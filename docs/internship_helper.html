@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Internship Helper Documentation</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+    body {
+    padding: 1rem;
+    background: var(--card);
+    color: var(--text);
+    font-family: system-ui, sans-serif;
+    line-height: 1.6;
+    }
+    h1, h2, h3 { color: var(--brand); }
+    code, pre {
+    background: #0b0d12;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    }
+    pre {
+    padding: 0.75rem;
+    overflow-x: auto;
+    }
+    a { color: var(--brand); text-decoration: underline; }
+</style>
+</head>
+<body>
+<h1>Internships and ChatBot Implementation Documentation</h1>
+<blockquote>
+<p>Written by <a href="https://github.com/comp423-25s/csxl-team-a1">Carmine from Team A1</a> for the CSXL Web Application.<br> <em>Last Updated: 05/02/2025</em></p>
+</blockquote>
+<p>This document contains technical specifications for the Internships feature of the CSXL web application. This feature adds <em>2</em> new database tables, <em>4</em> new API routes, and <em>4</em> new frontend components to the application.</p>
+<p>The Internships Feature adds a table of internships by scraping internship data from a world-reknown github repository to the CSXL web application. The CSXL web application can now store this internship data, which includes roles, company names, application links and locations to each internship.</p>
+<h2>Authors/Contributors</h2>
+<ul>
+<li><a href="https://github.com/ElijahWood2003">Elijah Wood</a></li>
+<li><a href="https://github.com/Arden-Feldt">Arden Feldt</a></li>
+<li><a href="https://github.com/sisaxena42">Siddhant Saxena</a></li>
+<li><a href="https://github.com/carmine-anderson">Carmine Anderson - Falconi</a></li>
+</ul>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#frontend-features">Frontend Features</a><ul>
+<li><a href="#user-features">User Features</a><ul>
+<li><a href="#internships-home">Internships Home</a></li>
+<li><a href="#filtering-component">Filtering Component</a><ul>
+<li><a href="#filtering-by-company-name">Filtering by company name</a></li>
+</ul>
+</li>
+<li><a href="#krisai-chatbot-component">KrisAI</a></li>
+<li><a href="#admin-view-component">Admin-View Component</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#conclusions">Conclusions</a></li>
+<li><a href="#backend-design-and-implementation">Backend Design and Implementation</a><ul>
+<li><a href="#entity-design">Entity Design</a></li>
+<li><a href="#pydantic-model-implementation">Pydantic Model Implementation</a></li>
+<li><a href="#api-implementation">API Implementation</a></li>
+<li><a href="#permission-summary">Permission Summary</a></li>
+</ul>
+</li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#future-considerations">Future Considerations</a></li>
+</ul>
+<h2>Frontend Features<a name='FrontendFeatures'></a></h2>
+<p>The frontend features add <em>4</em> new Angular components, all at the <code>/internships</code> route.</p>
+<h3>User Features<a name='UserFeatures'></a></h3>
+<p>The following pages have been added and are available for all users on the CSXL site. These pages are ultimately powered by new Angular service functions connected to new backend APIs.</p>
+<h3>Internships Home<a name='InternshipsHome'></a></h3>
+<p><img src="./images/Internshipshome.png" alt="Internships home page"></p>
+<p>The home page for the new Internships feature is available on the side navigation toolbar at <code>/internships</code>. The home page contains a filtering bar, KrisAI, and a table of internships which are scraped from a github repository of internships available, updated weekly.</p>
+<h3>Filtering Component<a name='FilteringComponent'></a></h3>
+<p><img src="./images/filteringphoto.png" alt="Filtering component"></p>
+<p>The filtering bar allows users to filter through the internships available. You can filter the internships using the company name, role, and or location. An example of using the company name can be seen below.</p>
+<h3>Filtering by company name<a name='FilterEx'></a></h3>
+<p><img src="./images/Filterbyname.png" alt="Filtering by company name"></p>
+<p>As you can see, if I was searching for jobs offered by <code>Apple Inc</code>, you can apply the filter, and the data for the current open positions that are available will be shown to the user.</p>
+<h3>KrisAI Chatbot Component<a name='KrisAIComponent'></a></h3>
+<p>As seen in the bottom right corner of the first photo, we have KrisAI, a CSXL chatbot ready to help the users with any internship question or prep. Upon clicking KrisAi, you are greeted with the prompt <code>Ask a question about internships to KrisAi!</code></p>
+<p><img src="./images/KrisAIFirst.png" alt="KrisAi Introduction"></p>
+<p>You can ask KrisAI to help you prepare for interviews or to even provide you practice questions.
+For this example, I asked it <code>Hey KrisAI! Can you help me prepare for an interview with Apple?</code> to which it gave an open ended, and very helpful response.</p>
+<p><img src="./images/KrisAIAnswer1.png" alt="Kris Ai Response 1">
+<img src="./images/KrisAIAnswer2.png" alt="Kris Ai Response 2">
+<img src="./images/KrisAIAnswerFinal.png" alt="Kris Ai Response Final"></p>
+<p>As seen above, KrisAi was extremely helpful with providing help to the user with an interview coming up.</p>
+<h3>Admin-View Component<a name='AdminComponent'></a></h3>
+<p>As seen in the following image, the internships home page has a settings bar in the top right corner near the logged in user button, this is a tool that can be used by authorized users to add a new internship to the database so that the end users (students) will be able to apply to.</p>
+<p><img src="./images/Internshipshome.png" alt="Internships home page">
+<img src="./images/adminview.png" alt="Internship Administration"></p>
+<p>From here, anyone with the permissions to do so, have access to creating a new internship for the database. An example of adding a UNC Professor Application</p>
+<p><img src="./images/adminadding.png" alt="Admin UNC Prof 1">
+<img src="./images/adminadded.png" alt="Admin UNC Prof 2"></p>
+<p>Admins are also allowed to delete the internships from the database as shown below, by clicking the trash can button.</p>
+<p><img src="./images/deleting.png" alt="Deleting"></p>
+<h3>Conclusions<a name='Conclusions'></a></h3>
+<p>In total, the following components have been added:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Route</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Internship Home</strong></td>
+<td><code>/internships</code></td>
+<td>Main home page for the internships feature.</td>
+</tr>
+<tr>
+<td><strong>Filtering Component</strong></td>
+<td><code>/internships/widgets/filter</code></td>
+<td>Filters through the internships table.</td>
+</tr>
+<tr>
+<td><strong>KrisAI Component</strong></td>
+<td><code>/internships/widget.Chat-bot-widget</code></td>
+<td>KrisAi chatbot to help with internship prep.</td>
+</tr>
+<tr>
+<td><strong>Admin-View Component</strong></td>
+<td><code>/internships/internships-admin</code></td>
+<td>The Admin view allows the creation and deletion of new internships.</td>
+</tr>
+</tbody></table>
+<h2>Backend Design and Implementation<a name='BackendDesignandImplementation'></a></h2>
+<p>The internships feature ultimately adds <em>2</em> new database tables and <em>4</em> new API routes.</p>
+<h3>Entity Design<a name='EntityDesign'></a></h3>
+<p>The Internships Feature adds two new database tables and entities. They are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Table Name</th>
+<th>Entity</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>internship</code></td>
+<td><code>InternshipEntity</code></td>
+<td>Stores internship information for each internship.</td>
+</tr>
+<tr>
+<td><code>applied__table</code></td>
+<td><code>Join Table</code></td>
+<td>Persists a many to many relationship between user and internship table.</td>
+</tr>
+</tbody></table>
+<p>The fields and relationships between these entities are shown below:</p>
+<p><img src="./images/Entitytable.jpeg" alt="Entity Design"></p>
+<p>As you can see, the two association tables defined by <code>InternshipEntity</code> and <code>Join Table</code> relate to (and therefore add relationship fields to) the existing <code>user</code> table.</p>
+<h3>Pydantic Model Implementation<a name='PydanticModelImplementation'></a></h3>
+<p>The Pydantic models for internship and filterQuery are nearly one-to-one with their entity counterparts. However, sections utilize a more custom model structure, as shown below:</p>
+<table>
+<tr><th width="520">`Internship` and `filterQuery` Models</th></tr>
+<tr>
+<td>
+
+<pre><code class="language-py">class Internship(BaseModel):
+    &quot;&quot;&quot;
+    Model to represent an `Internship`.
+    &quot;&quot;&quot;
+
+    id: Optional[int] = None
+    company: str
+    role: str
+    location: str
+    applicationLink: str
+    datePosted: Optional[date] = None
+    deadline: Optional[date] = None
+    appliedFor: bool = False
+
+
+class filterQuery(BaseModel):
+    &quot;&quot;&quot;
+    Model to represent query filters for the internship table
+    &quot;&quot;&quot;
+
+
+    company: Optional[str] = None
+    role: Optional[str] = None
+    location: Optional[str] = None
+    appliedFor: Optional[bool] = None
+
+    @classmethod
+    def as_query(cls):
+        &quot;&quot;&quot;Helper method to create query parameters from the model&quot;&quot;&quot;
+        return Query(None, description=&quot;Filter criteria for internships&quot;)
+</code></pre>
+</td>
+</tr>
+</table>
+
+<p>As you can see, the &#39;Internship&#39; model closely follows the equivalent Internship interface (in TypeScript) and InternshipEntity in the database entities. This helps to simplify the logic and maintain logic across the stack.</p>
+<p>We also have a filterQuery model which we use to easily build filter queries in our frontend to query our database. We convert this model into parameters for the GET API request.</p>
+<h3>API Implementation<a name='APIImplementation'></a></h3>
+<p>The Internships and chatbot feature adds 5 new API routes to handle the operations needed to move the needed data.</p>
+<p>Here is a summary of the APIs added:</p>
+<h4>Internship and Chatbot APIs:</h4>
+<p><img src="./images/api1.png" alt="Internship and chatbot"></p>
+<h4>Admin-View Internship APIs:</h4>
+<p><img src="./images/api2.png" alt="Admin-View Internship"></p>
+<h3>Permission Summary<a name='PermissionSummary'></a></h3>
+<p>All of these API routes call on <strong>backend service functions</strong> to perform these operations. Some of these backend services are protected by permissions, those being the ones utilized by the Admin-View. This is because, the end users need to access the chatbot and get API calls to use. Here is a summary of the permissions that this feature added:</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Resource</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&quot;internships.create&quot;</code></td>
+<td><code>&quot;internships&quot;</code></td>
+<td>Gives the user permission to create new internships in the database.</td>
+</tr>
+<tr>
+<td><code>&quot;internships.update&quot;</code></td>
+<td><code>&quot;internships/internship/{internship_id}&quot;</code></td>
+<td>Gives the user permission to update a internship in the database.</td>
+</tr>
+<tr>
+<td><code>&quot;internships.delete&quot;</code></td>
+<td><code>&quot;internships/internship/{internship_id}&quot;</code></td>
+<td>Gives the user permission to delete a internship in the database.</td>
+</tr>
+</tbody></table>
+<h3>Testing<a name='Testing'></a></h3>
+<p>The Internship feature adds full, thorough testing to every new service function added in the internship services. All tests pass, and all services created or modified have ~100% test coverage.</p>
+<h2>Future Considerations<a name='FutureConsiderations'></a></h2>
+<ul>
+<li>We would like to integrate KrisAI with our database so that users can directly ask questions about the internships that are available on the page.</li>
+<li>We would like to also automatically check and update the internships weekly according to the github page that updates weekly. In shorter terms, make it update accordingly. <a href="https://github.com/cvrve/Summer2025-Internships#we-love-our-contributors-%EF%B8%8F%EF%B8%8F">Link to Github Repository</a></li>
+</ul>
+
+</body>
+</html>
