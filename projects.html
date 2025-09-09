@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carmine's - Projects</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="fade-ready">
+    <header class="site-header">
+        <div class="container header-flex">
+        <img src="img/github.png" alt="Github Logo" class="avatar" />
+        <div class="intro">
+            <h1>Projects</h1>
+            <p class="tagline">
+                The following are projects that I have completed either for academic purposes, or
+                for my own enjoyment and learning.
+            </p>
+            <nav aria-label="Primary">
+                <ul class="nav">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                    <li><a href="https://github.com/carmine-anderson">Github</a></li>
+                    <li><a href="https://www.linkedin.com/in/carmine-anderson-falconi-561824204/">LinkedIn</a></li>
+                </ul>
+            </nav>
+        </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Internship Helper -->
+        <section id="about" class="section">
+        <div class="container">
+            <a href="https://github.com/comp423-25s/csxl-team-a1/blob/stage/docs/feature_implementation.md"><h2>Internship Helper</h2></a>
+
+        </div>
+        </section>
+
+        <!-- Daily Check-in-->
+        <section id="" class="section alt">
+        <div class="container">
+            <a href="https://github.com/carmine-anderson/daily-checkin"><h2>Daily Check-in</h2></a>
+        </div>
+        </section>
+
+        <!-- Pygame -->
+        <section id="skills" class="section">
+        <div class="container">
+            <a href="https://github.com/carmine-anderson/allgame"><h2>Allgame</h2></a>
+        </div>
+        </section>
+
+        <!-- MusAIc -->
+        <section id="skills" class="section alt">
+        <div class="container">
+            <a href="https://github.com/carmine-anderson/MusAIc_App"><h2>MusAIc</h2></a>
+        </div>
+        </section>
+
+    <footer class="site-footer">
+        <div class="container">
+        <p>© <span id="year">2025</span> Carmine Anderson-Falconi • Chapel Hill, NC</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fade IN on load (handles normal load + bfcache back/forward)
+        const enableFadeIn = () => {
+            if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+            document.body.classList.remove('fade-ready', 'fade-out');
+            // force reflow to ensure transition starts
+            void document.body.offsetWidth;
+            document.body.classList.add('fade-in');
+            }
+        };
+
+        // Prepare initial state ASAP
+        document.documentElement.classList.add('js'); // optional flag
+        if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+            document.body.classList.add('fade-ready');
+        }
+
+        // Run when DOM is ready
+        document.addEventListener('DOMContentLoaded', enableFadeIn);
+
+        // Also handle back/forward cache restores
+        window.addEventListener('pageshow', (e) => {
+            if (e.persisted) enableFadeIn();
+        });
+
+        // Intercept internal link clicks to fade OUT before navigating
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest('a');
+            if (!a) return;
+
+            // Skip new tabs, downloads, anchors, or modified clicks
+            if (
+            a.target === '_blank' ||
+            a.hasAttribute('download') ||
+            a.getAttribute('href')?.startsWith('#') ||
+            e.metaKey || e.ctrlKey || e.shiftKey || e.altKey
+            ) return;
+
+            // Only fade for same-origin navigations
+            const url = new URL(a.href, location.href);
+            if (url.origin !== location.origin) return;
+
+            // Respect reduce motion
+            if (!matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+
+            // Prevent immediate navigation, fade out, then go
+            e.preventDefault();
+            document.body.classList.remove('fade-in');
+            // force reflow so the next class transition applies
+            void document.body.offsetWidth;
+            document.body.classList.add('fade-out');
+
+            // Match the CSS duration (260ms). Add a tiny buffer.
+            setTimeout(() => { location.href = url.href; }, 280);
+        });
+    </script>
+</body>
+</html>

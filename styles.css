@@ -24,6 +24,28 @@ h1, h2 { line-height: 1.2; margin: 0 0 0.75rem; }
 h1 { font-size: clamp(2rem, 3vw, 2.8rem); }
 h2 { font-size: clamp(1.4rem, 2.2vw, 1.8rem); color: var(--brand); }
 
+/* --- ADDED: Remove underlines & outlines from links --- */
+a {
+    color: var(--brand);
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none;
+    color: var(--brand);
+}
+a:focus,
+a:active {
+    outline: none;
+    text-decoration: none;
+}
+
+/* Optional hover effect without permanent underline */
+a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+/* ------------------------------------------ */
+
 .site-header {
     border-bottom: 1px solid rgba(255,255,255,0.08);
     background: linear-gradient(180deg, rgba(93,169,255,0.06), transparent 60%);
@@ -67,12 +89,13 @@ h2 { font-size: clamp(1.4rem, 2.2vw, 1.8rem); color: var(--brand); }
     font-weight: 500;
     box-shadow: 0 0 0 transparent;
     transition:
-    background-color 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.15s ease;
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.15s ease;
 }
+
 .nav a:hover,
 .nav a:focus {
     background: var(--brand);
@@ -81,6 +104,7 @@ h2 { font-size: clamp(1.4rem, 2.2vw, 1.8rem); color: var(--brand); }
     box-shadow: 0 0 10px var(--brand), 0 0 24px rgba(93,169,255,0.6);
     transform: translateY(-2px);
 }
+
 .nav a:focus-visible {
     outline: 2px solid #fff;               
     outline-offset: 2px;
@@ -120,4 +144,10 @@ h2 { font-size: clamp(1.4rem, 2.2vw, 1.8rem); color: var(--brand); }
     color: var(--muted);
     padding: 1.25rem 0;
     text-align: center;
+}
+/* --- Page transition (respects Reduce Motion) --- */
+@media (prefers-reduced-motion: no-preference) {
+.fade-ready { opacity: 0; }
+.fade-in    { opacity: 1; transition: opacity 100ms ease; }
+.fade-out   { opacity: 0; transition: opacity 260ms ease; }
 }
