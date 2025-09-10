@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Extracurricular Activities and Involvement — Carmine Anderson-Falconi</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-flex">
+    <img src="/img/hobbies.png" alt="Portrait of Carmine Anderson-Falconi" class="avatar" />
+    <div class="intro">
+        <h1>Extracurricular Activities and Involvement</h1>
+        <p class="tagline">
+            Here you will be able to learn more about the extracurricular activities/hobbies I have as well as 
+            what I am involved in around campus. 
+        </p>
+        <nav aria-label="Primary">
+        <ul class="nav">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/html_pages/about.html">About</a></li>
+            <li><a href="/html_pages/classes-skills.html">Classes/Skills</a></li>
+            <li><a href="/projects.html">Projects</a></li>
+            <li><a href="https://github.com/carmine-anderson" target="_blank" rel="noopener noreferrer">Github</a></li>
+            <li><a href="https://www.linkedin.com/in/carmine-anderson-falconi-561824204/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        </ul>
+        </nav>
+    </div>
+    </div>
+</header>
+
+<main>
+    <!-- Extra-Curriculars -->
+    <section id="extra-curriculars" class="section">
+        <div class="container container--wide-extras">
+        <p class="section-intro" style="color: aliceblue;">
+            Outside of academics and professional work, I am involved in organizations around campus and have a personal
+            passion for photography as well. Here is a snapshot of both my leadership roles and creative interests.
+        </p>
+
+        <div class="extra-grid">
+            <!-- Campus Involvement -->
+            <article class="extra-card">
+            <h2>Campus Involvement</h2>
+            <ul class="involvement-list">
+            <li class="org-section">
+                <h3>Kappa Theta Pi, Professional Technology Organization</h3>
+                <p class="role">Director of New Member Education</p>
+                <ul class="org-details">
+                <li><strong>UNC’s first co-ed professional technology organization</strong> fostering professional, social, and technical growth.</li>
+                <li>Centered on <strong>networking with friendship and trust</strong>, not just resume-building.</li>
+                <li>Supports <strong>leadership and innovation</strong> through workshops, project teams, and community support.</li>
+                </ul>
+            </li>
+
+            <li class="org-section">
+                <h3>Latinos in Tech (SHPE)</h3>
+                <p class="role">Member</p>
+                <ul class="org-details">
+                <li><strong>Latinos in Tech</strong> is a UNC chapter of the Society of Hispanic Professional Engineers (SHPE).</li>
+                <li>Dedicated to <strong>empowering and supporting Hispanic and Latinx students</strong> pursuing careers in technology and engineering.</li>
+                <li>Provides <strong>networking, mentorship, and professional development</strong> through events, workshops, and community outreach.</li>
+                </ul>
+            </li>
+
+            <li class="org-section">
+                <h3>Tech Workshops & Hackathons</h3>
+                <p class="role">Leader/Volunteer</p>
+                <ul class="org-details">
+                    <li><strong>Organized resume-building workshops</strong> to help peers strengthen their professional materials.</li>
+                    <li>Led <strong>LeetCode practice sessions</strong> to improve technical problem-solving skills.</li>
+                    <li>Hosted <strong>behavioral and technical interview prep</strong> sessions for KTP members.</li>
+                    <li>Volunteered at campus hackathons, providing guidance and logistical support to participants.</li>
+                </ul>
+            </li>
+            </ul>
+
+            <p style="margin-top:1rem; color: var(--muted);">
+                Generally, in the listed extra-curriculars, I help organize workshops, support peer development, and contribute to a welcoming tech community on campus.
+            </p>
+            </article>
+
+            <!-- Photography -->
+            <article class="extra-card">
+            <h2>Photography</h2>
+            <p style="color: var(--muted);">
+                I enjoy street-wear, portrait, campus life, and travel photography. A few favorites:
+            </p>
+            <div class="photo-gallery" aria-label="Photography gallery">
+                <!-- Replace these sources with your real images -->
+                <img src="/img/photography/lien.jpg" alt="Fish-eye picture of girl" />
+                <img src="/img/photography/lien3.jpg" alt="Fish-eye picture of girl" />
+                <img src="/img/photography/lien2.JPG" alt="Picture of girl" />
+                <img src="/img/photography/boys.JPG" alt="The boys" />
+                <img src="/img/photography/KTP.jpeg" alt="Fish-eye picture of girl" />
+                <img src="/img/photography/military.jpg" alt="Male portrait" />
+            </div>
+            </article>
+        </div>
+        </div>
+    </section>
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog">
+    <button class="lightbox-close" aria-label="Close image">&times;</button>
+    <img alt="Enlarged photo" />
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+    <p>© <span id="year">2025</span> Carmine Anderson-Falconi • Chapel Hill, NC</p>
+    </div>
+</footer>
+
+    <script src="/scripts/transition1.js"></script>
+    <script>
+    // Simple lightbox for photo gallery
+    (function () {
+        const lb = document.getElementById('lightbox');
+        const lbImg = lb?.querySelector('img');
+        const closeBtn = lb?.querySelector('.lightbox-close');
+
+        // Open on click
+        document.querySelectorAll('.photo-gallery img').forEach(img => {
+        img.addEventListener('click', () => {
+            if (!lb || !lbImg) return;
+            lbImg.src = img.src;                   // use same image; swap to higher-res if you have it
+            lb.classList.add('open');
+            lb.setAttribute('aria-hidden', 'false');
+        });
+        });
+
+        // Close helpers
+        function close() {
+        if (!lb || !lbImg) return;
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden', 'true');
+        lbImg.src = '';
+        }
+
+        // Close on overlay click or button
+        lb?.addEventListener('click', (e) => {
+        if (e.target === lb) close();            // only if clicking the backdrop
+        });
+        closeBtn?.addEventListener('click', close);
+
+        // Close on Esc
+        document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lb?.classList.contains('open')) close();
+        });
+    })();
+    </script>
+
+</body>
+</html>
