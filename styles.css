@@ -104,23 +104,35 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; }
 /* Two-column fixed panels that stretch across the wide container */
 .project-split {
   display: grid;
-  /* give the doc more space than the notes */
-  grid-template-columns: 1.7fr 1fr;
+  grid-template-columns: 1.7fr 1fr; /* give the doc more space than the notes */
   gap: 2rem;
   align-items: stretch;
 }
 
-/* Shared pane styles */
+/* =============================== */
+/* Enhanced pane borders + shadows */
+/* =============================== */
 .md-card,
 .project-notes {
   background: var(--card);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 2px solid rgba(93,169,255,0.35);             /* brighter border */
   border-radius: 16px;
   box-shadow:
-    0 8px 28px rgba(0,0,0,0.35),
-    inset 0 0 0 1px rgba(255,255,255,0.04);
-  height: clamp(620px, 78vh, 1000px); /* fixed, viewport-like height */
+    0 10px 34px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(93,169,255,0.18) inset,             /* inner ring */
+    0 0 22px rgba(93,169,255,0.12);                    /* soft outer glow */
+  height: clamp(620px, 78vh, 1000px);                  /* fixed, viewport-like height */
   overflow: hidden;
+}
+
+/* Hover/focus subtle accent */
+.md-card:hover,
+.project-notes:hover {
+  box-shadow:
+    0 12px 38px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(93,169,255,0.26) inset,
+    0 0 28px rgba(93,169,255,0.18);
+  border-color: rgba(93,169,255,0.45);
 }
 
 /* LEFT: embedded doc */
@@ -143,9 +155,199 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; }
 }
 .project-notes .notes-title { margin-top: 0; color: var(--brand); }
 
+/* On-brand, minimal internal scrollbars */
+.project-notes::-webkit-scrollbar,
+.md-frame::-webkit-scrollbar {
+  width: 8px;
+}
+.project-notes::-webkit-scrollbar-track,
+.md-frame::-webkit-scrollbar-track {
+  background: transparent;
+}
+.project-notes::-webkit-scrollbar-thumb,
+.md-frame::-webkit-scrollbar-thumb {
+  background: rgba(93,169,255,0.35);
+  border-radius: 8px;
+}
+.project-notes::-webkit-scrollbar-thumb:hover,
+.md-frame::-webkit-scrollbar-thumb:hover {
+  background: rgba(93,169,255,0.55);
+}
+
 /* Responsive: stack on small screens */
 @media (max-width: 1000px) {
   .project-split { grid-template-columns: 1fr; }
   .md-card, .project-notes { position: static; height: auto; }
   .md-frame { height: clamp(520px, 60vh, 820px); }
+}
+
+/* =========================
+   ME AT A GLANCE (theme-aligned)
+========================= */
+.glance {
+  padding: 3rem 0;
+  /* faint on-brand wash like your header */
+  background: linear-gradient(180deg, rgba(93,169,255,0.06), transparent 60%);
+}
+
+.glance h2 {
+  text-align: center;
+  margin-bottom: 1.25rem;
+  color: var(--brand);
+}
+
+.glance p {
+  max-width: 780px;
+  margin: 0 auto 1.5rem auto;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text);
+  text-align: center;
+  opacity: 0.95;
+}
+
+.glance-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 780px;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.glance-list li {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.08);
+  /* subtle on-brand accent like your chips/panes */
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(93,169,255,0.12) inset;
+  border-left: 4px solid rgba(93,169,255,0.45);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+
+/* Hover lift with brand glow (respect reduced motion below) */
+.glance-list li:hover {
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(93,169,255,0.18) inset,
+    0 0 22px rgba(93,169,255,0.12);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   FEATURED PROJECTS (theme-aligned)
+========================= */
+.featured-projects {
+  padding: 1.5rem 0 3rem;
+}
+
+.featured-projects h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--brand);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.project-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 1.25rem;
+  color: var(--text);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(93,169,255,0.12) inset;
+  transition: transform .15s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(93,169,255,0.35);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(93,169,255,0.18) inset,
+    0 0 26px rgba(93,169,255,0.14);
+}
+
+.project-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: var(--brand);
+}
+
+.project-card p {
+  margin: 0 0 1rem 0;
+  color: var(--muted);
+}
+
+/* Optional CTA button that matches your .nav chip vibe */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--brand);
+  background: rgba(93,169,255,0.12);
+  color: var(--text);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease, transform .15s ease;
+}
+
+.btn:hover,
+.btn:focus {
+  background: var(--brand);
+  color: #0f1115;
+  border-color: var(--brand);
+  box-shadow: 0 0 10px var(--brand), 0 0 24px rgba(93,169,255,0.6);
+  transform: translateY(-2px);
+}
+
+/* Reduced motion: neutralize lifts/transforms */
+@media (prefers-reduced-motion: reduce) {
+  .glance-list li:hover,
+  .project-card:hover,
+  .project-card:focus-within,
+  .btn:hover,
+  .btn:focus { transform: none; transition: none; }
+}
+
+/* =========================
+   RESUME CTA SECTION
+========================= */
+.resume-section {
+  padding: 2rem 0; 
+  text-align: center;
+}
+
+.resume-section .resume-btn {
+  margin: 0;
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--brand);
+  background: rgba(93,169,255,0.12);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: 0 0 0 transparent;
+  transition: background-color .25s ease, color .25s ease,
+              border-color .25s ease, box-shadow .25s ease,
+              transform .15s ease;
+}
+
+.resume-section .resume-btn:hover,
+.resume-section .resume-btn:focus {
+  background: var(--brand);
+  color: #0f1115;
+  border-color: var(--brand);
+  box-shadow: 0 0 10px var(--brand), 0 0 24px rgba(93,169,255,0.6);
+  transform: translateY(-2px);
 }
