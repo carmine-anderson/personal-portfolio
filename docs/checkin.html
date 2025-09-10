@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Daily Check-in</title>
+<link rel="stylesheet" href="iframe.css?v=2" />
+</head>
+<body>
+<main class="doc">
+<h1>🌱 Daily Check-In App</h1>
+<p>The <strong>Daily Check-In App</strong> is a lightweight, personalized web application that allows a single user to submit a daily check-in form. Submissions are securely stored and automatically emailed each day. This project was designed to be simple, fast, and cost-effective while leveraging modern, free-tier technologies.</p>
+<hr>
+<h2>🚀 Project Overview</h2>
+<p>The goal of this app was to create a beautiful and private way for my significant other to submit a single daily check-in. Each response is stored in a database and automatically triggers an email notification, keeping everything streamlined and personal.</p>
+<p>Key features include:</p>
+<ul>
+<li>A <strong>secure login screen</strong> with lightweight password protection.</li>
+<li>A <strong>single user form</strong> for daily check-ins.</li>
+<li><strong>Automatic email notifications</strong> when a check-in is submitted.</li>
+<li>A <strong>gratitude journal</strong> feature to track gratitude entries over time. (Still in Progross)</li>
+<li>Fully responsive UI built with <strong>React + TypeScript</strong>.</li>
+<li><strong>Free hosting and backend services</strong>, making the app zero-cost to maintain.</li>
+</ul>
+<hr>
+<h2>🛠 Tech Stack</h2>
+<table>
+<thead>
+<tr>
+<th>Technology</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>React/Vite/TypeScript</strong></td>
+<td>Frontend framework and tooling for a fast, modern UI</td>
+</tr>
+<tr>
+<td><strong>Supabase</strong></td>
+<td>Backend-as-a-Service for database, authentication, and APIs</td>
+</tr>
+<tr>
+<td><strong>Resend</strong></td>
+<td>Email service to send notifications (3000 free emails/month)</td>
+</tr>
+<tr>
+<td><strong>GitHub Pages</strong></td>
+<td>Free hosting for static frontend deployment</td>
+</tr>
+<tr>
+<td><strong>Netlify Functions</strong></td>
+<td>For lightweight serverless logic</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>🗂 Folder Structure</h2>
+<p>The project was designed to be modular and easy to maintain:</p>
+<pre><code>project-root/
+│
+├── public/ # Static assets
+├── src/
+│ ├── components/ # Reusable React components
+│ │ ├── CheckInForm.tsx
+│ │ ├── GratitudeCorner.tsx
+│ │ ├── Login.tsx
+│ │ └── Dashboard.tsx
+│ │
+│ ├── App.tsx # Main app container
+│ ├── main.tsx # Entry point
+│ └── styles/ # Global styles
+│
+├── package.json
+├── vite.config.ts
+└── README.md
+</code></pre>
+<hr>
+<h2>🗄 Database Setup (Supabase)</h2>
+<p>I used <strong>Supabase</strong> to handle authentication and data storage.<br>Below are the tables I created:</p>
+<h3>1. <code>users</code> table</h3>
+<p>Stores login credentials for the single user.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>uuid</td>
+<td>Primary key</td>
+</tr>
+<tr>
+<td>email</td>
+<td>text</td>
+<td>Unique login email</td>
+</tr>
+<tr>
+<td>password</td>
+<td>text</td>
+<td>Securely hashed</td>
+</tr>
+</tbody></table>
+<h3>2. <code>checkins</code> table</h3>
+<p>Stores daily check-in form submissions.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>uuid</td>
+<td>Primary key</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>uuid</td>
+<td>Foreign key to <code>users</code> table</td>
+</tr>
+<tr>
+<td>mood</td>
+<td>text</td>
+<td>User&#39;s daily mood</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>text</td>
+<td>Additional comments</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>Auto-set on insert</td>
+</tr>
+</tbody></table>
+<h3>3. <code>gratitude</code> table</h3>
+<p>Stores gratitude entries.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>uuid</td>
+<td>Primary key</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>uuid</td>
+<td>Foreign key to <code>users</code> table</td>
+</tr>
+<tr>
+<td>entry</td>
+<td>text</td>
+<td>Gratitude text</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>Auto-set on insert</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>💌 Email Notifications (Resend)</h2>
+<p>I integrated <strong>Resend</strong> to send email notifications whenever a check-in is submitted.  </p>
+<h3>Example email payload:</h3>
+<pre><code class="language-typescript">import { Resend } from &#39;resend&#39;;
+
+const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+
+async function sendCheckInEmail(data: { mood: string; notes: string }) {
+  await resend.emails.send({
+    from: &#39;Daily Check-In &lt;no-reply@dailycheckin.app&gt;&#39;,
+    to: &#39;myemail@example.com&#39;,
+    subject: &#39;New Daily Check-In Submitted&#39;,
+    html: `
+      &lt;h1&gt;New Check-In&lt;/h1&gt;
+      &lt;p&gt;&lt;strong&gt;Mood:&lt;/strong&gt; ${data.mood}&lt;/p&gt;
+      &lt;p&gt;&lt;strong&gt;Notes:&lt;/strong&gt; ${data.notes}&lt;/p&gt;
+      &lt;p&gt;Submitted on ${new Date().toLocaleString()}&lt;/p&gt;
+    `
+  });
+}
+</code></pre>
+<p>This function is triggered right after a successful check-in is saved to Supabase.</p>
+<h2>🔒 Lightweight Authentication</h2>
+<p>I implemented a simple password-based login on the frontend to restrict access to people without the password.</p>
+<p>My goal is to create a more strict lightweight authentication service using Supabase where:</p>
+<ul>
+<li><p>When a user logs in, a session token is kept in localStorage.</p>
+</li>
+<li><p>A Logout button clears the session and redirects back to the login screen.</p>
+</li>
+</ul>
+<p>With example login logic such as:</p>
+<pre><code class="language-typescript">async function login(email: string, password: string) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) throw error;
+  localStorage.setItem(&#39;session&#39;, JSON.stringify(data.session));
+}
+</code></pre>
+<h2>🌐 Deployment</h2>
+<p>I chose GitHub Pages for hosting since it&#39;s free and integrates nicely with GitHub Actions.</p>
+<h2>🖼 Key Features Demonstration</h2>
+<ol>
+<li>Daily Check-In Form</li>
+</ol>
+<p>Simple and intuitive interface to submit a daily entry.</p>
+<pre><code class="language-tsx">&lt;CheckInForm
+  onSubmit={(data) =&gt; {
+    saveCheckIn(data);  // saves to Supabase
+    sendCheckInEmail(data);  // sends notification
+  }}
+/&gt;
+</code></pre>
+<ol start="2">
+<li>Gratitude Corner</li>
+</ol>
+<p>Although still in production, this will display a running list of gratitude entries with timestamps, such as:</p>
+<pre><code class="language-tsx">&lt;GratitudeCorner entries={gratitudeEntries} /&gt;
+</code></pre>
+<p>Example Output:</p>
+<pre><code class="language-arduino">📝 &quot;Grateful for coffee and a productive morning!&quot; - 2025-09-09
+🌞 &quot;Sunshine after a rainy week.&quot; - 2025-09-08
+❤️ &quot;Quality time with family.&quot; - 2025-09-07
+</code></pre>
+<h2>📌 Summary</h2>
+<p>The Daily Check-In App demonstrates how to build a personalized, full-stack web app entirely with free-tier services. It’s lightweight, fast, 
+and designed with a strong focus on privacy and user experience. This project taught us about deploying production-ready software with minimal overhead, 
+while still having fun building something meaningful.</p>
+
+</main>
+</body>
+</html>
