@@ -351,3 +351,211 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; }
   box-shadow: 0 0 10px var(--brand), 0 0 24px rgba(93,169,255,0.6);
   transform: translateY(-2px);
 }
+/* =========================
+   EXTRA-CURRICULARS SECTION
+========================= */
+.section-intro {
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+  text-align: center;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Default: stack nicely on small/medium */
+.extra-grid {
+  display: grid;
+  grid-template-columns: 2fr;
+  gap: 1.5rem;
+}
+
+/* On wide screens, make both columns the same width */
+@media (min-width: 980px) {
+  .extra-grid {
+    grid-template-columns: 2fr 2fr; /* equal widths */
+    align-items: start;             /* heights independent */
+  }
+}
+
+.extra-card {
+  /* content-driven height */
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(93,169,255,0.12) inset;
+  transition: transform .15s ease, box-shadow .25s ease;
+}
+
+.extra-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(93,169,255,0.35);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(93,169,255,0.18) inset,
+    0 0 26px rgba(93,169,255,0.14);
+}
+
+/* You used <h2> inside cards; style both just in case */
+.extra-card h2,
+.extra-card h3 {
+  color: var(--brand);
+  margin: 0 0 1rem 0;
+}
+
+
+/* --------- Gallery: 2-column grid, responsive ---------- */
+.photo-gallery {
+  --gap: 0.9rem;
+  --thumb-height: clamp(220px, 26vw, 360px); /* consistent tile height */
+  
+  display: grid;
+  grid-template-columns: 1fr; /* Single column by default for mobile */
+  gap: var(--gap);
+  margin-top: 1rem;
+}
+
+/* Switch to 2-column layout on medium and larger screens */
+@media (min-width: 740px) {
+  .photo-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Image styling */
+.photo-gallery img {
+  width: 100%;
+  height: var(--thumb-height);
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid rgba(93,169,255,0.25);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: zoom-in;
+}
+
+/* Hover effect */
+.photo-gallery img:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 16px rgba(93,169,255,0.35);
+  border-color: rgba(93,169,255,0.45);
+}
+
+
+/* --------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;            /* hidden until opened */
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 1000;
+}
+
+.lightbox.open {            /* toggled via JS */
+  display: flex;
+}
+
+.lightbox img {
+  max-width: min(92vw, 1400px);
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: 14px;
+  border: 2px solid rgba(93,169,255,0.45);
+  box-shadow:
+    0 18px 60px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(93,169,255,0.22) inset,
+    0 0 32px rgba(93,169,255,0.18);
+  cursor: zoom-out;
+}
+
+/* Close button */
+.lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: rgba(23,25,35,0.85);
+  color: var(--text);
+  border: 1px solid rgba(93,169,255,0.45);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(93,169,255,0.35);
+}
+.lightbox-close:hover {
+  background: rgba(93,169,255,0.18);
+}
+
+/* Main container list */
+.involvement-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Space between each organization */
+}
+
+/* Each main section */
+.org-section {
+  background: var(--card);
+  padding: 1.25rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.3),
+    0 0 0 1px rgba(93,169,255,0.12) inset;
+}
+
+/* Titles */
+.org-section h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--brand);
+  font-size: 1.25rem;
+}
+
+/* Role under the title */
+.role {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+/* Nested details */
+.org-details {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.org-details li {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Optional: subtle hover effect */
+.org-section:hover {
+  transform: translateY(-2px);
+  border-color: rgba(93,169,255,0.35);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(93,169,255,0.18) inset,
+    0 0 20px rgba(93,169,255,0.12);
+  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+/* Special wider container for Extras page */
+.container--wide-extras {
+  max-width: 1400px; /* Wider layout just for this page */
+  margin: 0 auto;
+  padding: 1.25rem;
+}
