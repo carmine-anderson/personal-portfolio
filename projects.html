@@ -103,9 +103,61 @@
         </section>
 
         <!-- Daily Check-in-->
-        <section class="section alt">
-        <div class="container">
-            <a href="https://github.com/carmine-anderson/daily-checkin"><h2>Daily Check-in</h2></a>
+        <section id="about" class="section alt">
+        <!-- wider container just for this split layout -->
+        <div class="container container--wide">
+            <a href="https://github.com/carmine-anderson/daily-checkin/blob/main/project.md"><h1>Daily Check-in</h1></a>
+
+            <!-- Two-column split: doc left, notes right -->
+            <div class="project-split">
+            <!-- LEFT: embedded doc -->
+            <div class="project-doc">
+                <div class="md-card">
+                <iframe
+                    class="md-frame"
+                    src="/docs/checkin.html"
+                    title="Daily Check-in Documentation"
+                    loading="lazy"
+                ></iframe>
+                </div>
+            </div>
+
+            <!-- RIGHT: your write-up -->
+            <aside class="project-notes">
+                <h2 class="notes-title">Notes</h2>
+                <h2>Daily Check-In App</h2>
+                <p>
+                The <strong>Daily Check-In App</strong> is a private, lightweight web application built for a single user to submit daily check-ins. 
+                Each submission is securely stored using <strong>Supabase</strong> and automatically triggers an email notification via <strong>Resend</strong>. 
+                It features a simple password-protected login, a responsive <strong>React + TypeScript</strong> frontend, and is fully deployed through 
+                <strong>GitHub Pages</strong> for free hosting.
+                </p>
+                <p>
+                The app includes a daily check-in form and a “Gratitude Corner” feature (in progress) to track gratitude entries over time. 
+                By leveraging free-tier services, the project stays cost-free while maintaining a smooth and secure experience.
+                </p>
+
+
+                <h3>Tech Stack</h3>
+                <ul class="chip-list">
+                <li>React</li>
+                <li>Vite</li>
+                <li>TypeScript</li>
+                <li>Supabase</li>
+                <li>Resend</li>
+                <li>GitHub Pages</li>
+                <li>Netlify Functions</li>
+                <li>HTML</li>
+                <li>CSS</li>
+                </ul>
+
+                <h3>Project Links</h3>
+                <p class="notes-links">
+                    <a href="https://github.com/carmine-anderson/daily-checkin" target="_blank">GitHub Repository</a> ·
+                    <a href="https://github.com/carmine-anderson" target="_blank">My Other Projects</a>
+                </p>
+            </aside>
+            </div>
         </div>
         </section>
 
