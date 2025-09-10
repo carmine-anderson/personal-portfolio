@@ -20,7 +20,8 @@
             <nav aria-label="Primary">
                 <ul class="nav">
                     <li><a href="/index.html">Home</a></li>
-                    <li><a href="/projects.html">Projects</a></li>
+                    <li><a href="/html_pages/about.html">About</a></li>
+                    <li><a href="/html_pages/classes-skills.html">Classes/Skills</a></li>
                     <li><a href="https://github.com/carmine-anderson">Github</a></li>
                     <li><a href="https://www.linkedin.com/in/carmine-anderson-falconi-561824204/">LinkedIn</a></li>
                 </ul>
@@ -128,48 +129,6 @@
         </div>
     </footer>
 
-    <script>
-        // Fade IN on load (handles normal load + bfcache back/forward)
-        const enableFadeIn = () => {
-            if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-            document.body.classList.remove('fade-ready', 'fade-out');
-            void document.body.offsetWidth;
-            document.body.classList.add('fade-in');
-            }
-        };
-
-        document.documentElement.classList.add('js');
-        if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-            document.body.classList.add('fade-ready');
-        }
-
-        document.addEventListener('DOMContentLoaded', enableFadeIn);
-        window.addEventListener('pageshow', (e) => {
-            if (e.persisted) enableFadeIn();
-        });
-
-        // Intercept internal link clicks to fade OUT before navigating
-        document.addEventListener('click', (e) => {
-            const a = e.target.closest('a');
-            if (!a) return;
-
-            if (
-              a.target === '_blank' ||
-              a.hasAttribute('download') ||
-              a.getAttribute('href')?.startsWith('#') ||
-              e.metaKey || e.ctrlKey || e.shiftKey || e.altKey
-            ) return;
-
-            const url = new URL(a.href, location.href);
-            if (url.origin !== location.origin) return;
-            if (!matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
-
-            e.preventDefault();
-            document.body.classList.remove('fade-in');
-            void document.body.offsetWidth;
-            document.body.classList.add('fade-out');
-            setTimeout(() => { location.href = url.href; }, 280);
-        });
-    </script>
+    <script src="scripts/transition1.js"></script>
 </body>
 </html>
